@@ -1,0 +1,17 @@
+{
+  "name": "postman_tests",
+  "version": "1.0.0",
+  "description": "This is a postman test project",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "newman run tests/collection.json -e tests/environment.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "newman": "^3.8.0"
+  }
+}

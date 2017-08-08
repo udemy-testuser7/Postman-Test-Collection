@@ -1,0 +1,28 @@
+{
+  "id": "23e756cd-fc60-b0d5-58b6-cc4a95cf9cae",
+  "name": "Dev",
+  "values": [
+    {
+      "enabled": true,
+      "key": "API_KEY",
+      "type": "text",
+      "value": "8cb7e72be2f4d3418c9576b0411204b4de9f898b"
+    },
+    {
+      "enabled": true,
+      "key": "DOMAIN",
+      "type": "text",
+      "value": "api.sparkpost.com"
+    },
+    {
+      "enabled": true,
+      "key": "subaccountId",
+      "type": "text",
+      "value": "138"
+    }
+  ],
+  "timestamp": 1502109145556,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2017-08-07T13:09:37.943Z",
+  "_postman_exported_using": "Postman/5.1.3"
+}

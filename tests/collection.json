@@ -1,0 +1,376 @@
+{
+	"id": "87c79ddc-5486-10ca-062d-eadcbcb38e2c",
+	"name": "Test Collection",
+	"allTests": [],
+	"timestamp": 1502047407061,
+	"collection_id": "09079f8e-4ad1-8825-e681-ef79ca25b192",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "95a6a3f7-7189-963e-54e4-48d70a2dbdac",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "09079f8e-4ad1-8825-e681-ef79ca25b192",
+		"name": "Test Collection",
+		"description": "This is a test collection",
+		"order": [
+			"f502bc5a-2e9d-7b1b-ab85-7b287e7c181f",
+			"7ec9e27d-a826-00d9-2872-a87c857b60ac",
+			"b2c59987-ca0d-0866-a7af-432fed055ecb"
+		],
+		"folders": [],
+		"folders_order": [],
+		"requests": [
+			{
+				"id": "7ec9e27d-a826-00d9-2872-a87c857b60ac",
+				"headers": "Authorization: {{API_KEY}}\nAccept: application/json\n",
+				"headerData": [
+					{
+						"key": "Authorization",
+						"value": "{{API_KEY}}",
+						"description": "",
+						"enabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"enabled": true
+					}
+				],
+				"url": "https://api.sparkpost.com/api/v1/subaccounts/{{subaccountId}}",
+				"queryParams": [],
+				"preRequestScript": "",
+				"pathVariables": {},
+				"pathVariableData": [],
+				"method": "GET",
+				"data": [],
+				"dataMode": "params",
+				"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"subAccountName\", jsonData.results.name);",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1502047393549,
+				"name": "List specific subaccount",
+				"description": "Endpoint for retrieving information about a specific subaccount.\n\n",
+				"collectionId": "09079f8e-4ad1-8825-e681-ef79ca25b192",
+				"responses": []
+			},
+			{
+				"id": "b2c59987-ca0d-0866-a7af-432fed055ecb",
+				"headers": "Content-Type: application/json\nAccept: application/json\nAuthorization: {{API_KEY}}\n",
+				"headerData": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": "",
+						"enabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"enabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{API_KEY}}",
+						"description": "",
+						"enabled": true
+					}
+				],
+				"url": "https://api.sparkpost.com/api/v1/subaccounts/{{subaccountId}}",
+				"queryParams": [],
+				"preRequestScript": "",
+				"pathVariables": {},
+				"pathVariableData": [],
+				"method": "PUT",
+				"data": "{\n  \"name\": \"This is updated subaccount info\",\n  \"status\": \"suspended\"\n}\n",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"Verify name is updated\"] = jsonData.results.name !== postman.getEnvironmentVariable(\"subAccountName\");",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1502047391235,
+				"name": "Edit a subaccount",
+				"description": "Update an existing subaccount's information. You can update the following information associated with a subaccount:\n\n#### Request Body Attributes\n\n| Field   | Required   | Type   | Description                                        | Notes |\n| ------- | ---------- | ------ | -------------------------------------------------- | ----- |\n| name    | no         | string | User friendly identifier for a specific subaccount |       |\n| status  | no         | string | Status of the account                              | Value is one of `active`, `suspended`, or `terminated` |\n\n",
+				"collectionId": "09079f8e-4ad1-8825-e681-ef79ca25b192",
+				"responses": []
+			},
+			{
+				"id": "f502bc5a-2e9d-7b1b-ab85-7b287e7c181f",
+				"headers": "Content-Type: application/json\nAccept: application/json\nAuthorization: {{API_KEY}}\n",
+				"headerData": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": "",
+						"enabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"enabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{API_KEY}}",
+						"description": "",
+						"enabled": true
+					}
+				],
+				"url": "https://api.sparkpost.com/api/v1/subaccounts",
+				"queryParams": [],
+				"preRequestScript": "",
+				"pathVariables": {},
+				"pathVariableData": [],
+				"method": "POST",
+				"data": "{\n  \"name\": \"Sparkle Ponies\",\n  \"key_label\": \"API Key for Sparkle Ponies Subaccount\",\n  \"key_grants\": [\"smtp/inject\", \"sending_domains/manage\", \"message_events/view\", \"suppression_lists/manage\"]\n}\n",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Verify status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"Verify subaccount_id is an int\"] = Number.isInteger(jsonData.results.subaccount_id) === true;\n\npostman.setEnvironmentVariable(\"subaccountId\", jsonData.results.subaccount_id);",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1502047394961,
+				"name": "Create new subaccount",
+				"description": "Provisions a new subaccount and an initial subaccount API key. Subaccount API keys are only allowed very\nspecific grants, which are limited to: `smtp/inject`, `sending_domains/manage`, `message_events/view` and `suppression_lists/manage`.\nSubaccounts are allowed to send mail using the SMTP protocol, retrieve sending statistics via the Message Events API, and manage their own Sending Domains and Suppression List.\n\n#### Request Body Attributes\n\n| Field         | Required   | Type    | Description                                                                                                                   |\n| ------------  | ---------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |\n| name          | yes        | string  | User friendly identifier for a specific subaccount                                                                            |\n| key_label     | yes        | string  | User friendly identifier for the initial subaccount api key                                                                   |\n| key_grants    | yes        | Array   | List of grants to give to the initial subaccount api key                                                                      |\n| key_valid_ips | no         | Array   | List of IP's that the initial subaccount api key can be used from. If empty array, then api key is usable on any IP address   |\n\n",
+				"collectionId": "09079f8e-4ad1-8825-e681-ef79ca25b192",
+				"responses": []
+			}
+		],
+		"timestamp": 1502046664924,
+		"synced": false,
+		"syncedFilename": "",
+		"remote_id": 0,
+		"remoteLink": "",
+		"remoteLinkUpdatedAt": null,
+		"public": false,
+		"owner": "2489794",
+		"subscribed": false,
+		"createdAt": 1502046664924,
+		"updatedAt": 1502046983480,
+		"write": true,
+		"published": false,
+		"favorite": false,
+		"permissions": {},
+		"syncedPermissions": {},
+		"sharedWithTeam": false
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [],
+	"results": [
+		{
+			"id": "f502bc5a-2e9d-7b1b-ab85-7b287e7c181f",
+			"name": "Create new subaccount",
+			"url": "https://api.sparkpost.com/api/v1/subaccounts",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+			},
+			"tests": {
+				"Verify status code is 200": true,
+				"Verify subaccount_id is an int": true
+			},
+			"testPassFailCounts": {
+				"Verify status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify subaccount_id is an int": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				119
+			],
+			"allTests": [
+				{
+					"Verify status code is 200": true,
+					"Verify subaccount_id is an int": true
+				}
+			],
+			"time": 119,
+			"totalRequestTime": 119,
+			"iterationResults": {}
+		},
+		{
+			"id": "7ec9e27d-a826-00d9-2872-a87c857b60ac",
+			"name": "List specific subaccount",
+			"url": "https://api.sparkpost.com/api/v1/subaccounts/{{subaccountId}}",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2571
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			],
+			"time": 2571,
+			"totalRequestTime": 2571,
+			"iterationResults": {}
+		},
+		{
+			"id": "b2c59987-ca0d-0866-a7af-432fed055ecb",
+			"name": "Edit a subaccount",
+			"url": "https://api.sparkpost.com/api/v1/subaccounts/{{subaccountId}}",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Verify name is updated": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify name is updated": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				91
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Verify name is updated": true
+				}
+			],
+			"time": 91,
+			"totalRequestTime": 91,
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 5,
+	"totalFail": 0,
+	"totalTime": 2781,
+	"lifecycle": "done",
+	"willStop": false,
+	"requests": [
+		{
+			"name": "Create new subaccount",
+			"id": "f502bc5a-2e9d-7b1b-ab85-7b287e7c181f",
+			"url": "https://api.sparkpost.com/api/v1/subaccounts",
+			"time": 119,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+			},
+			"testPassFailCounts": {
+				"Verify status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify subaccount_id is an int": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Verify status code is 200",
+				"Verify subaccount_id is an int"
+			],
+			"gridData": [
+				[
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Verify status code is 200": true,
+				"Verify subaccount_id is an int": true
+			}
+		},
+		{
+			"name": "List specific subaccount",
+			"id": "7ec9e27d-a826-00d9-2872-a87c857b60ac",
+			"url": "https://api.sparkpost.com/api/v1/subaccounts/{{subaccountId}}",
+			"time": 2571,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Status code is 200"
+			],
+			"gridData": [
+				[
+					true
+				]
+			],
+			"tests": {
+				"Status code is 200": true
+			}
+		},
+		{
+			"name": "Edit a subaccount",
+			"id": "b2c59987-ca0d-0866-a7af-432fed055ecb",
+			"url": "https://api.sparkpost.com/api/v1/subaccounts/{{subaccountId}}",
+			"time": 91,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify name is updated": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Status code is 200",
+				"Verify name is updated"
+			],
+			"gridData": [
+				[
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Status code is 200": true,
+				"Verify name is updated": true
+			}
+		}
+	],
+	"synced": false
+}
