@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "newman run tests/collection.json -e tests/environment.json"
+    "test": "newman run tests/collection.json -e tests/environment.json --reporters junit --reporter-junit-export report.xml"
   },
   "author": "",
   "license": "ISC",
